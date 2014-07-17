@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="OrderTrackingMoel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="OrderTrackingMoelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="OrderTrackingMoel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="OrderTrackingMoelContent" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="OrderTrackingMoel.Clients" />
+          <EntitySet Name="Orders" EntityType="OrderTrackingMoel.Orders" />
+          <EntitySet Name="Parts" EntityType="OrderTrackingMoel.Parts" />
+          <AssociationSet Name="ClientsOrders" Association="OrderTrackingMoel.ClientsOrders">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="OrdersParts" Association="OrderTrackingMoel.OrdersParts">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" />
+          <Property Name="Info" Type="String" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="OrderTrackingMoel.ClientsOrders" FromRole="Clients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientsClientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="OrderTrackingMoel.ClientsOrders" FromRole="Orders" ToRole="Clients" />
+          <Property Name="ClientsClientId1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parts" Relationship="OrderTrackingMoel.OrdersParts" FromRole="Orders" ToRole="Parts" />
+        </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="PartId" />
+          </Key>
+          <Property Name="PartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrdersOrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrdersOrderId1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="OrderTrackingMoel.OrdersParts" FromRole="Parts" ToRole="Orders" />
+        </EntityType>
+        <Association Name="ClientsOrders">
+          <End Type="OrderTrackingMoel.Clients" Role="Clients" Multiplicity="1" />
+          <End Type="OrderTrackingMoel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ClientsClientId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrdersParts">
+          <End Type="OrderTrackingMoel.Orders" Role="Orders" Multiplicity="*" />
+          <End Type="OrderTrackingMoel.Parts" Role="Parts" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="OrderTrackingMoel" />
+        <Alias Key="Target" Value="OrderTrackingMoel.Store" />
+        <EntityContainerMapping CdmEntityContainer="OrderTrackingMoelContent" StorageEntityContainer="OrderTrackingMoelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
